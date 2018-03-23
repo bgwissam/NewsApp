@@ -2,4 +2,25 @@
     <string name="app_name">NewsUpdate</string>
     <string name="no_internet_conn">No Internet Connection</string>
     <string name="no_news_found">There are no current news on the page</string>
+
+    <!-- add strings for the setting activity -->
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_tittle">News Settings</string>
+    <!-- settings order by string resources-->
+    <string name="setting_date_label">From Year</string>
+    <string name="settings_date_key" translatable="false">year</string>
+    <string name="settings_date_default" translatable="false">@string/setting_date_value</string>
+    <string name="setting_date_value" translatable="false">2014</string>
+    <!-- settings for magnitude value-->
+    <string name="settings_order_by_section_label">Section</string>
+    <string name="settings_order_by_section_value" translatable="false">politics/politics</string>
+    <string name="settings_order_by_section_business" translatable="false">business/business</string>
+    <string name="settings_order_by_section_world" translatable="false">world/world</string>
+
+    <string name="settings_min_section_label">Section</string>
+    <string name="settings_min_section_default" translatable="false">politics</string>
+    <string name="settings_min_section_business" translatable="false">business</string>
+    <string name="settings_min_section_world" translatable="false">world</string>
+    <string name="settings_min_section_key" translatable="false">min_magnitude</string>
+
 </resources>

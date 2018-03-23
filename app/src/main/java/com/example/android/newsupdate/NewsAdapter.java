@@ -56,18 +56,24 @@ public class NewsAdapter extends ArrayAdapter<News> {
             dateVariable = timePublication;
             timeVariable = "";
         }
+        ViewHolder holder = new ViewHolder();
+        holder.dateStamp = (TextView) listItemView.findViewById(R.id.date);
+        holder.timeStamp = (TextView) listItemView.findViewById(R.id.time);
+        holder.titleSection = (TextView) listItemView.findViewById(R.id.section_view);
+        holder.webTitle = (TextView) listItemView.findViewById(R.id.webtitle_view);
+        listItemView.setTag(holder);
         //set the date
-        TextView dateView = (TextView) listItemView.findViewById(R.id.date);
+        TextView dateView = holder.dateStamp;
         String formatDate = formatDate(dateVariable);
         dateView.setText(formatDate);
 
         //set the time
-        TextView timeView = (TextView) listItemView.findViewById(R.id.time);
+        TextView timeView = holder.timeStamp;
         String formatTime = formatTime(timeVariable);
         timeView.setText(formatTime);
 
         //Find the type of news
-        TextView sectionView = (TextView) listItemView.findViewById(R.id.section_view);
+        TextView sectionView = holder.titleSection;
         sectionView.setText(currentNews.getmSection());
 
         GradientDrawable sectionViewBackground = (GradientDrawable) sectionView.getBackground();
@@ -75,7 +81,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         sectionViewBackground.setColor(sectionColor);
 
         //find webtitle view and set in its proper place
-        TextView webTitleView = (TextView) listItemView.findViewById(R.id.webtitle_view);
+        TextView webTitleView = holder.webTitle;
         webTitleView.setText(currentNews.getmWebTitle());
 
         return listItemView;
@@ -129,5 +135,11 @@ public class NewsAdapter extends ArrayAdapter<News> {
                 sectionColorId = R.color.notfound;
         }
         return ContextCompat.getColor(getContext(), sectionColorId);
+    }
+    static class ViewHolder {
+        TextView titleSection;
+        TextView webTitle;
+        TextView dateStamp;
+        TextView timeStamp;
     }
 }

@@ -4,12 +4,16 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,7 +32,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             NEWS_LOADER_ID = 1 hold the value for the loader current activity
      */
     public static final String LOG_TAG = NewsActivity.class.getName();
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?q=debate&tag=politics/politics&from-date=2014-01-01&api-key=test";
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?";
     private static final int NEWS_LOADER_ID = 1;
     private NewsAdapter mAdapter;
     private TextView mEmptyStateTextView;
@@ -76,15 +80,37 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                 //Create a new intent to view the curent earthquake URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
                 //Launch intent
-                startActivity(websiteIntent);
+                if (websiteIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(websiteIntent);
+                }
             }
         });
     }
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        Log.i(LOG_TAG, "OnCreate Load was activiated");
-        return new NewsLoader(this, GUARDIAN_REQUEST_URL);
+
+        //Create a prefernce instance
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        //retrieve the string value of the preference, the other is the default value
+        String sectionName = sharedPref.getString(getString(R.string.settings_min_section_key), getString(R.string.settings_min_section_default));
+        //retrieve selected day from the EditeTextPrefernce
+        String dateSelected = sharedPref.getString(getString(R.string.settings_date_key), getString(R.string.settings_date_default));
+        //parse break apart the Uri string
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+        //Uri builder prepares the Uri we just parsed
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        String orderBy = sharedPref.getString(getString(R.string.settings_date_key), getString(R.string.settings_date_default));
+        //append uri parameteres
+        uriBuilder.appendQueryParameter("q", "debate");
+        uriBuilder.appendQueryParameter("tag", sectionName);
+        uriBuilder.appendQueryParameter("from-date", dateSelected + "-01-01");
+        uriBuilder.appendQueryParameter("api-key", "test");
+
+        Log.i(LOG_TAG, "OnCreate Load was activiated: " + uriBuilder);
+
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -105,5 +131,23 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<News>> loader) {
         mAdapter.clear();
         Log.i(LOG_TAG, "OnLoaderReset was activited");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //inflate the option menu we specified in the xml
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

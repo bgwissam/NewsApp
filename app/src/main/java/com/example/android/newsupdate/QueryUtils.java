@@ -23,7 +23,10 @@ import java.util.List;
 public final class QueryUtils {
     //tag log for the QueryUtils
     private static final String LOG_TAG = QueryUtils.class.getName();
-
+    //stores the key variable to extract from JSON object
+    private static final String response = "response";
+    //stores the key varialbe for extracting from the JSON array
+    private static final String results = "results";
     //create private constructor
     public QueryUtils() {
     }
@@ -73,7 +76,7 @@ public final class QueryUtils {
             urlConnection.connect();
 
             //check request for errors
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == urlConnection.HTTP_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -119,9 +122,9 @@ public final class QueryUtils {
             //Create a JSONobject from JSON response string
             JSONObject baseJsonResponse = new JSONObject(newsJSON);
             //extract JSONArray
-            JSONObject newsObject = baseJsonResponse.getJSONObject("response");
+            JSONObject newsObject = baseJsonResponse.getJSONObject(response);
             //get the results array
-            JSONArray newsArray = newsObject.getJSONArray("results");
+            JSONArray newsArray = newsObject.getJSONArray(results);
 
             for (int i = 0; i < newsArray.length(); i++) {
 
