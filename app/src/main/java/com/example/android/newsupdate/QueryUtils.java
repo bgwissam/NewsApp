@@ -139,8 +139,14 @@ public final class QueryUtils {
                 String date = currentNews.getString("webPublicationDate");
                 //get the date
                 String url = currentNews.getString("webUrl");
+                //get author data from tags
+                JSONArray tagsArray = currentNews.getJSONArray("tags");
+                JSONObject tagsObject = tagsArray.getJSONObject(0);
+                //get first name and last name
+                String firstName = tagsObject.getString("firstName");
+                String lastName = tagsObject.getString("lastName");
 
-                News news1 = new News(section, title, date, url);
+                News news1 = new News(section, title, date, url, firstName, lastName);
                 //add the news to the list
                 news.add(news1);
 

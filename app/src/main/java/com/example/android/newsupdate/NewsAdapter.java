@@ -61,6 +61,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
         holder.timeStamp = (TextView) listItemView.findViewById(R.id.time);
         holder.titleSection = (TextView) listItemView.findViewById(R.id.section_view);
         holder.webTitle = (TextView) listItemView.findViewById(R.id.webtitle_view);
+        holder.authorName = (TextView) listItemView.findViewById(R.id.author_name_view);
         listItemView.setTag(holder);
         //set the date
         TextView dateView = holder.dateStamp;
@@ -83,6 +84,10 @@ public class NewsAdapter extends ArrayAdapter<News> {
         //find webtitle view and set in its proper place
         TextView webTitleView = holder.webTitle;
         webTitleView.setText(currentNews.getmWebTitle());
+
+        //place the author's name in the respective textView
+        TextView authorNameView = holder.authorName;
+        authorNameView.setText(currentNews.getAuthorName());
 
         return listItemView;
     }
@@ -141,5 +146,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
         TextView webTitle;
         TextView dateStamp;
         TextView timeStamp;
+        TextView authorName;
     }
 }

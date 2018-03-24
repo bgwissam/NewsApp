@@ -16,11 +16,13 @@
     <string name="settings_order_by_section_value" translatable="false">politics/politics</string>
     <string name="settings_order_by_section_business" translatable="false">business/business</string>
     <string name="settings_order_by_section_world" translatable="false">world/world</string>
+    <string name="settings_order_by_section_technology" translatable="false">technology/technology</string>
 
     <string name="settings_min_section_label">Section</string>
     <string name="settings_min_section_default" translatable="false">politics</string>
     <string name="settings_min_section_business" translatable="false">business</string>
     <string name="settings_min_section_world" translatable="false">world</string>
+    <string name="settings_min_section_technology" translatable="false">Technology</string>
     <string name="settings_min_section_key" translatable="false">min_magnitude</string>
 
 </resources>

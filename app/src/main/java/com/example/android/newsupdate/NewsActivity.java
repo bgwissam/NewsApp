@@ -103,11 +103,11 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
         String orderBy = sharedPref.getString(getString(R.string.settings_date_key), getString(R.string.settings_date_default));
         //append uri parameteres
-        uriBuilder.appendQueryParameter("q", "debate");
+
         uriBuilder.appendQueryParameter("tag", sectionName);
         uriBuilder.appendQueryParameter("from-date", dateSelected + "-01-01");
         uriBuilder.appendQueryParameter("api-key", "test");
-
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
         Log.i(LOG_TAG, "OnCreate Load was activiated: " + uriBuilder);
 
         return new NewsLoader(this, uriBuilder.toString());

@@ -1,6 +1,8 @@
 package com.example.android.newsupdate;
 
 
+import android.util.Log;
+
 public class News {
 
     //web title to illustrate the news discription
@@ -11,13 +13,18 @@ public class News {
     private String mUrl;
     //Section name
     private String mSection;
+    //author first and last name
+    private String mFirst;
+    private String mLast;
 
     //Create a constructor
-    public News(String section, String webTitle, String date, String url) {
+    public News(String section, String webTitle, String date, String url, String first, String last) {
         mSection = section;
         mWebTitle = webTitle;
         mDate = date;
         mUrl = url;
+        mFirst = first;
+        mLast = last;
     }
 
     public String getmDate() {
@@ -34,5 +41,11 @@ public class News {
 
     public String getmUrl() {
         return mUrl;
+    }
+
+    public String getAuthorName () {
+        String authorName = null;
+        authorName = mFirst + " " + mLast;
+        return authorName;
     }
 }
